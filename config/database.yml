@@ -1,0 +1,24 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: nps_service_development
+  username: postgres
+  password: postgres
+  host: localhost
+
+test:
+  <<: *default
+  database: nps_service_test
+  username: postgres
+  password: postgres
+  host: localhost
+#
+production:
+  <<: *default
+  database: nps_service_production
+  username: nps_service
+  password: <%= ENV["nps_service_DATABASE_PASSWORD"] %>
