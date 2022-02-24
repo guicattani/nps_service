@@ -7,12 +7,12 @@ class CreateNetPromoterScores < ActiveRecord::Migration[6.1]
     create_table :net_promoter_scores do |t|
       t.integer :score
       t.string  :type
-      t.enum    :touchpoint,       enum_type: 'touchpoint_type',       default: 'pending'
-      t.enum    :respondent_class, enum_type: 'respondent_class_type', default: 'pending'
-      t.bigint  :respondent_id
-      t.enum    :object_class,     enum_type: 'object_class_type',     default: 'pending'
-      t.bigint  :object_id
       t.string  :token,            null: false
+      t.enum    :touchpoint,       enum_type: 'touchpoint_type',       default: 'pending'
+      t.enum    :respondent_class, enum_type: 'respondent_class_type', default: 'Pending'
+      t.enum    :object_class,     enum_type: 'object_class_type',     default: 'Pending'
+      t.bigint  :respondent_id
+      t.bigint  :object_id
       t.timestamps
 
       t.index :respondent_id, unique: true
