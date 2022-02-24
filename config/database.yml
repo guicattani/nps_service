@@ -1,24 +1,21 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
+  pool: <%= ENV["WEB_DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
 development:
   <<: *default
   database: nps_service_development
-  username: postgres
-  password: postgres
-  host: localhost
-
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  host: <%= ENV["DATABASE_HOST"] %>
 test:
   <<: *default
   database: nps_service_test
-  username: postgres
-  password: postgres
-  host: localhost
-#
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  host: <%= ENV["DATABASE_HOST"] %>
 production:
   <<: *default
-  database: nps_service_production
-  username: nps_service
-  password: <%= ENV["nps_service_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
+  connect_timeout: 10
+  read_timeout: 5

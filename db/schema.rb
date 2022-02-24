@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,35 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_220_223_205_128) do
+ActiveRecord::Schema.define(version: 2022_02_23_205128) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   # These are custom enum types that must be created before they can be used in the schema definition
-  create_enum "object_class_type", Pending, %i[Realtor HomedayService]
-  create_enum "respondent_class_type", Pending, %i[Seller Buyer]
-  create_enum "touchpoint_type", pending, %i[realtor_feedback homeday_service_feedback]
-
-  # Custom types defined in this database.
-  # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "object_class_type", ["Pending", "[:Realtor", " :HomedayService]"]
-  create_enum "respondent_class_type", ["Pending", "[:Seller", " :Buyer]"]
-  create_enum "touchpoint_type", ["pending", "[:realtor_feedback", " :homeday_service_feedback]"]
+  create_enum "object_class_type", ["Pending", "[:Realtor, :HomedayService]"]
+  create_enum "respondent_class_type", ["Pending", "[:Seller, :Buyer]"]
+  create_enum "touchpoint_type", ["pending", "[:realtor_feedback, :homeday_service_feedback]"]
 
   create_table "net_promoter_scores", force: :cascade do |t|
     t.integer "score"
     t.string "type"
     t.string "token", null: false
-    t.enum "touchpoint", default: "pending", enum_type: "touchpoint_type", as: "touchpoint_type"
-    t.enum "respondent_class", default: "Pending", enum_type: "respondent_class_type", as: "respondent_class_type"
-    t.enum "object_class", default: "Pending", enum_type: "object_class_type", as: "object_class_type"
+    t.enum "touchpoint", default: "pending", as: "touchpoint_type"
+    t.enum "respondent_class", default: "Pending", as: "respondent_class_type"
+    t.enum "object_class", default: "Pending", as: "object_class_type"
     t.bigint "respondent_id"
     t.bigint "object_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["object_id"], name: "index_net_promoter_scores_on_object_id", unique: true
     t.index ["respondent_id"], name: "index_net_promoter_scores_on_respondent_id", unique: true
-    t.check_constraint "score = ANY (ARRAY[NULL::integer, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])",
-                       name: "check_score_decimal_scale"
+    t.check_constraint "score = ANY (ARRAY[NULL::integer, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])", name: "check_score_decimal_scale"
   end
+
 end

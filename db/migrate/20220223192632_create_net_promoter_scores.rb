@@ -10,9 +10,9 @@ class CreateNetPromoterScores < ActiveRecord::Migration[6.1]
       t.integer :score
       t.string  :type
       t.string  :token,            null: false
-      t.enum    :touchpoint,       enum_type: 'touchpoint_type',       default: 'pending'
-      t.enum    :respondent_class, enum_type: 'respondent_class_type', default: 'Pending'
-      t.enum    :object_class,     enum_type: 'object_class_type',     default: 'Pending'
+      t.enum    :touchpoint,       as: 'touchpoint_type',       default: 'pending'
+      t.enum    :respondent_class, as: 'respondent_class_type', default: 'Pending'
+      t.enum    :object_class,     as: 'object_class_type',     default: 'Pending'
       t.bigint  :respondent_id
       t.bigint  :object_id
       t.timestamps

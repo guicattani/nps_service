@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 
+require 'factory_bot_rails'
+require 'dotenv'
+require 'pry'
+Dotenv.load
+
 RSpec.configure do |config|
+  config.filter_run :focus
+  config.run_all_when_everything_filtered = true
+  Dir['./spec/shared/**/*.rb'].each { |f| require f }
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
-
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
-
   config.shared_context_metadata_behavior = :apply_to_host_groups
-  config.filter_run_when_matching :focus
-  config.example_status_persistence_file_path = "spec/examples.txt"
-  config.disable_monkey_patching!
-
-  config.default_formatter = "doc" if config.files_to_run.one?
 
   config.profile_examples = 10
   config.order = :random
-
-  Kernel.srand config.seed
 end
