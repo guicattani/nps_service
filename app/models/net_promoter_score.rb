@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NetPromoterScore < ApplicationRecord
   validates :respondent_id, uniqueness: { scope: :respondent_class }
   validates :object_id,     uniqueness: { scope: :object_class }

@@ -261,6 +261,12 @@ GEM
       parser (>= 3.1.1.0)
     rubocop-daemon (0.3.2)
       rubocop
+    rubocop-rails (2.13.2)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 1.7.0, < 2.0)
+    rubocop-rspec (2.8.0)
+      rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     rusky (0.2.5)
       rake
@@ -313,6 +319,8 @@ DEPENDENCIES
   rspec-rails
   rubocop (~> 1.1)
   rubocop-daemon
+  rubocop-rails
+  rubocop-rspec
   rusky
   shoulda-matchers
   simplecov

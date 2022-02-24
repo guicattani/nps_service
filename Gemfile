@@ -24,6 +24,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rubocop', '~> 1.1'
   gem 'rubocop-daemon', require: false
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
   gem 'pry-byebug'
 end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateNetPromoterScores < ActiveRecord::Migration[6.1]
   def up
     create_enum 'touchpoint_type',       %w[pending]
