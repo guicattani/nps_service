@@ -20,8 +20,14 @@ require 'database_cleaner'
 
 SimpleCov.start 'rails'
 
+Dir[Rails.root.join('spec/support/publishers/**/*.rb')].each { |f| require f }
 Dir[Rails.root.join('spec/support/helpers/**/*.rb')].each { |f| require f }
-Dir[Rails.root.join('spec/support/shared/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('spec/support/shared/*.rb')].each { |f| require f }
+
+# load seeds
+Dir[Rails.root.join('spec/seeds/**/*.seeds.rb')].each do |seed|
+  load seed
+end
 
 RSpec.configure do |config|
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
@@ -31,6 +37,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   config.infer_spec_type_from_file_location!
   config.run_all_when_everything_filtered = true
+  config.use_transactional_fixtures = false
 
   config.before(:suite) do
     conn = Bunny.new
