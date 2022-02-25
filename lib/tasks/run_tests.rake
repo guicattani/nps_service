@@ -16,9 +16,7 @@ task :run_tests do
   Rake::Task["spec"].invoke
 
   print 'Stopping Sneakers...'
-  fname = 'sneakers.pid'
-  content = File.read(fname)
-  sh "kill -SIGINT #{content.gsub(/\n/,'')}"
+  sh "kill -SIGTERM `pidof ruby`"
   sh 'rm sneakers.pid'
   print "Done!\n"
 end

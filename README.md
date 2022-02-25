@@ -16,3 +16,6 @@
 Simply run `rake run_tests`
 
 This will create a Sneakers server and run the tests.
+
+## Known issues
+Rake tests leave ruby instances running in the background running unless all rubies instances are terminated together, so all ruby pids are terminated, this may lead to a server stopping, since all will receive SIGTERM.
