@@ -8,8 +8,13 @@ Metrics/BlockLength:
   Enabled: false
 Metrics/MethodLength:
   Max: 20
+  Exclude:
+  - "db/**/**.*"
 Metrics/ClassLength:
   Max: 200
+Metrics/AbcSize:
+  Exclude:
+    - "db/**/**.*"
 Layout/LineLength:
   Max: 120
 Layout/EmptyLinesAroundAttributeAccessor:
@@ -146,6 +151,10 @@ Lint/UselessRuby2Keywords: # new in 1.23
   Enabled: true
 Naming/BlockForwarding: # new in 1.24
   Enabled: true
+Naming/FileName:
+  Enabled: true
+  Exclude:
+      - "spec/seeds/**/*"
 Security/IoMethods: # new in 1.22
   Enabled: true
 Style/CollectionCompact: # new in 1.2
