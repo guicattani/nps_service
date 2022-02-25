@@ -17,8 +17,14 @@ class CreateNetPromoterScores < ActiveRecord::Migration[6.1]
       t.bigint  :object_id
       t.timestamps
 
-      t.index :respondent_id, unique: true
-      t.index :object_id,     unique: true
+      # Using indices adds an extra layer of protection (against race conditions) compared to Rails validations
+      t.index %i[respondent_id respondent_class], unique: true, name: 'unique_respondent'
+      t.index %i[object_id object_class],         unique: true, name: 'unique_object'
+      t.index %i[touchpoint
+                 respondent_id
+                 respondent_class
+                 object_id
+                 object_class], unique: true, name: 'unique_touchpoint'
       t.check_constraint 'score IN (NULL, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)', name: 'check_score_decimal_scale'
     end
   end
