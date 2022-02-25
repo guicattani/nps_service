@@ -18,14 +18,11 @@ require 'factory_bot_rails'
 require 'shoulda/matchers'
 require 'database_cleaner'
 
+SimpleCov.start 'rails'
+
 Dir[Rails.root.join('spec/support/helpers/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('spec/support/shared/**/*.rb')].each { |f| require f }
 
-# load seeds
-Dir[Rails.root.join('spec/seeds/**/*.seeds.rb')].each do |seed|
-  load seed
-end
-
-SimpleCov.start
 RSpec.configure do |config|
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
   config.include(Shoulda::Matchers::ActiveRecord, type: :model)
