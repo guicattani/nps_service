@@ -7,7 +7,6 @@ class CreateNetPromoterScores < ActiveRecord::Migration[6.1]
     create_enum 'scorable_class_type', %w[Pending]
 
     create_table :net_promoter_scores do |t|
-      t.integer :score
       t.string  :type
       t.string  :token,            null: false
       t.enum    :touchpoint,       as: 'touchpoint_type',       default: 'pending', null: false
@@ -23,8 +22,9 @@ class CreateNetPromoterScores < ActiveRecord::Migration[6.1]
                  respondent_class
                  scorable_id
                  scorable_class], unique: true, name: 'unique_touchpoint'
-      t.check_constraint 'score IN (NULL, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)', name: 'check_score_decimal_scale'
     end
+
+    execute('ALTER TABLE net_promoter_scores ADD COLUMN score smallint CHECK (score BETWEEN 1 AND 10)')
   end
 
   def down
