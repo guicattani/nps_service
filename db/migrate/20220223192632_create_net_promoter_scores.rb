@@ -10,16 +10,14 @@ class CreateNetPromoterScores < ActiveRecord::Migration[6.1]
       t.integer :score
       t.string  :type
       t.string  :token,            null: false
-      t.enum    :touchpoint,       as: 'touchpoint_type',       default: 'pending'
-      t.enum    :respondent_class, as: 'respondent_class_type', default: 'Pending'
-      t.enum    :object_class,     as: 'object_class_type',     default: 'Pending'
-      t.bigint  :respondent_id
-      t.bigint  :object_id
+      t.enum    :touchpoint,       as: 'touchpoint_type',       default: 'pending', null: false
+      t.enum    :respondent_class, as: 'respondent_class_type', default: 'Pending', null: false
+      t.enum    :object_class,     as: 'object_class_type',     default: 'Pending', null: false
+      t.bigint  :respondent_id,    null: false
+      t.bigint  :object_id,        null: false
       t.timestamps
 
       # Using indices adds an extra layer of protection (against race conditions) compared to Rails validations
-      t.index %i[respondent_id respondent_class], unique: true, name: 'unique_respondent'
-      t.index %i[object_id object_class],         unique: true, name: 'unique_object'
       t.index %i[touchpoint
                  respondent_id
                  respondent_class

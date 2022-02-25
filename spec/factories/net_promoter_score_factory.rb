@@ -5,5 +5,7 @@ FactoryBot.define do
     touchpoint       { 'pending' }
     respondent_class { 'Pending' }
     object_class     { 'Pending' }
+    object_id        { 1 }
+    respondent_id    { 1 }
   end
 end
