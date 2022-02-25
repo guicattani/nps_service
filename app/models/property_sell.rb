@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
 class PropertySell < NetPromoterScore
-  validates :respondent_class_type, inclusion: { in: %i[Seller Buyer] }
-  validates :object_class_type,     inclusion: { in: %i[Realtor HomedayService] }
+  validates :respondent_class, inclusion: { in: allowed_classes(%w[Seller Buyer]) }
+  validates :object_class,     inclusion: { in: allowed_classes(%w[Realtor HomedayService]) }
 
-  validates :touchpoint_type, inclusion: { in: %i[realtor_feedback] }, if: proc {
-                                                                             object_class_type == Realtor
-                                                                           }
-  validates :touchpoint_type, inclusion: { in: %i[homeday_service_feedback] }, if: proc {
-                                                                                     object_class_type == HomedayService
-                                                                                   }
+  validates :touchpoint, inclusion: { in: %w[realtor_feedback] },         if: proc { object_class == 'Realtor' }
+  validates :touchpoint, inclusion: { in: %w[homeday_service_feedback] }, if: proc { object_class == 'HomedayService' }
 end
