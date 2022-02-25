@@ -33,6 +33,20 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
 
   config.before(:suite) do
+    conn = Bunny.new
+    conn.start
+    channel = conn.create_channel
+    exchange = Bunny::Exchange.new(channel,
+                                   :direct,
+                                   "#{ENV['BUNNY_AMQP_EXCHANGE']}_test",
+                                   { durable: true })
+
+    queue = Bunny::Queue.new(channel,
+                             "#{ENV['CREATE_NPS_QUEUE_NAME']}_test",
+                             { durable: true })
+    queue.bind(exchange, routing_key: "#{ENV['CREATE_NPS_QUEUE_NAME']}_test")
+    conn.close
+
     # The :transaction strategy prevents :after_commit hooks from running
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
@@ -48,5 +62,27 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+  end
+
+  config.after(:suite) do
+    DatabaseCleaner.clean
+    conn = Bunny.new
+    conn.start
+    channel = conn.create_channel
+
+    # Main
+    exchange = Bunny::Exchange.new(channel, :direct, "#{ENV['BUNNY_AMQP_EXCHANGE']}_test",
+                                   { durable: true })
+    queue = Bunny::Queue.new(channel, "#{ENV['CREATE_NPS_QUEUE_NAME']}_test", { durable: true })
+    queue.unbind(exchange, routing_key: "#{ENV['CREATE_NPS_QUEUE_NAME']}_test")
+    queue.delete
+    exchange.delete
+
+    # Error
+    exchange = Bunny::Exchange.new(channel, :topic, "#{ENV['BUNNY_AMQP_EXCHANGE']}_test-error", { durable: true })
+    queue = Bunny::Queue.new(channel, "#{ENV['CREATE_NPS_QUEUE_NAME']}_test-error", { durable: true })
+    queue.unbind(exchange, routing_key: "#{ENV['CREATE_NPS_QUEUE_NAME']}_test-error")
+    queue.delete
+    exchange.delete
   end
 end

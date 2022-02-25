@@ -1,3 +1,5 @@
+require 'sneakers/tasks'
+require 'dotenv'
 require_relative 'config/application'
 
 Rails.application.load_tasks

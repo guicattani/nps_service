@@ -10,6 +10,9 @@ gem "puma", "~> 5.0"
 gem "bootsnap", require: false
 gem 'net-smtp', require: false
 
+# Event consumption via RabbitMQ
+gem 'sneakers'
+
 # Windows build
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
@@ -42,6 +45,5 @@ group :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers', require: false
   gem 'simplecov'
-  gem 'u-case'
 end
 
