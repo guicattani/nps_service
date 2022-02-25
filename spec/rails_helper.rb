@@ -48,15 +48,11 @@ RSpec.configure do |config|
     conn.close
 
     # The :transaction strategy prevents :after_commit hooks from running
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean_with :truncation
   end
 
   config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each) do |_example|
     DatabaseCleaner.start
   end
 
@@ -65,7 +61,6 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    DatabaseCleaner.clean
     conn = Bunny.new
     conn.start
     channel = conn.create_channel
