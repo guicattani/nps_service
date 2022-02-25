@@ -25,9 +25,9 @@ class CreateNetPromoterScoreWorker
       type: nps_payload["type"],
       touchpoint: nps_payload["touchpoint"],
       respondent_class: nps_payload["respondent_class"],
-      object_class: nps_payload["object_class"],
+      scorable_class: nps_payload["scorable_class"],
       respondent_id: nps_payload["respondent_id"],
-      object_id: nps_payload["object_id"]
+      scorable_id: nps_payload["scorable_id"]
     )
     nps.save!
   rescue StandardError => e

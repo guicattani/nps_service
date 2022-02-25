@@ -11,8 +11,8 @@ class AddEnumValuesOfPropertySell < ActiveRecord::Migration[6.1]
     add_enum_value 'respondent_class_type', :Seller, after: 'Pending'
     add_enum_value 'respondent_class_type', :Buyer,  after: 'Pending'
 
-    add_enum_value 'object_class_type',     :Realtor,        after: 'Pending'
-    add_enum_value 'object_class_type',     :HomedayService, after: 'Pending'
+    add_enum_value 'scorable_class_type',     :Realtor,        after: 'Pending'
+    add_enum_value 'scorable_class_type',     :HomedayService, after: 'Pending'
   end
 
   def down

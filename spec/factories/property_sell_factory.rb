@@ -4,8 +4,8 @@ FactoryBot.define do
   factory :property_sell do
     touchpoint       { 'realtor_feedback' }
     respondent_class { 'Seller' }
-    object_class     { 'Realtor' }
-    object_id        { 1 }
+    scorable_class   { 'Realtor' }
+    scorable_id      { 1 }
     respondent_id    { 1 }
   end
 end

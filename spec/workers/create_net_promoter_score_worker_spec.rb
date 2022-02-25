@@ -9,9 +9,9 @@ RSpec.describe CreateNetPromoterScoreWorker do
         type: 'PropertySell',
         touchpoint: 'realtor_feedback',
         respondent_class: 'Seller',
-        object_class: 'Realtor',
+        scorable_class: 'Realtor',
         respondent_id: 1,
-        object_id: 1
+        scorable_id: 1
       }
     ]
   end
