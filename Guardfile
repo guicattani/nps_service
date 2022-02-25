@@ -6,9 +6,12 @@ guard :rspec, cmd: "bundle exec spring rspec -f doc" do
 
   # RSpec files
   rspec = dsl.rspec
-  watch(rspec.spec_helper) { rspec.spec_dir }
-  watch(rspec.spec_support) { rspec.spec_dir }
+  watch(rspec.spec_helper)             { rspec.spec_dir }
+  watch(rspec.spec_support)            { rspec.spec_dir }
   watch(rspec.spec_files)
+
+  # Shared examples
+  watch(%r{^spec/shared/.+_spec\.rb$}) { rspec.spec_dir }
 
   # Ruby files
   ruby = dsl.ruby
