@@ -7,7 +7,7 @@ class NetPromoterScoreController < ActionController::Base
   def index
     return head :no_content if net_promoter_score_index_params[:touchpoint].nil?
 
-    nps_result = NetPromoterScore.where(touchpoint: net_promoter_score_index_params[:touchpoint])
+    nps_result = NetPromoterScore.where(index_query_params)
     render json: nps_result.to_json, status: :ok
   end
 
@@ -30,7 +30,21 @@ class NetPromoterScoreController < ActionController::Base
   end
 
   def net_promoter_score_index_params
-    params.permit(:touchpoint)
+    params.permit(:touchpoint, :respondent_class, :scorable_class)
+  end
+
+  def index_query_params
+    query = { touchpoint: net_promoter_score_index_params[:touchpoint] }
+
+    unless net_promoter_score_index_params[:respondent_class].nil?
+      query[:respondent_class] = net_promoter_score_index_params[:respondent_class]
+    end
+
+    unless net_promoter_score_index_params[:scorable_class].nil?
+      query[:scorable_class] = net_promoter_score_index_params[:scorable_class]
+    end
+
+    query
   end
 
   def authenticate
