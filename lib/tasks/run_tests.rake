@@ -15,8 +15,7 @@ task :run_tests do
 
   Rake::Task["spec"].invoke
 
-  print 'Stopping Sneakers...'
-  sh "kill -SIGTERM `pidof ruby`"
   sh 'rm sneakers.pid'
-  print "Done!\n"
+  print 'Stopping Sneakers and lefover rubies... (this will give rake error and it is expected, see Known Issues in the README file)'
+  sh "kill -SIGTERM `pidof ruby`"
 end
