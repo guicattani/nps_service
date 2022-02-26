@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NetPromoterScoreController < ActionController::Base
+class NetPromoterScoreController < ApplicationController
   before_action :authenticate, only: %i[index]
   before_action :set_net_promoter_score, only: %i[update]
 
