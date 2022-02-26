@@ -53,5 +53,5 @@ conn.close
 
 Sneakers.logger.level = Logger::INFO
 Rails.logger = Logger.new $stdout
-Rails.logger.level = 0
+Rails.logger.level = Logger::WARN
 # adapted from https://medium.com/kudos-to-you/background-job-in-rails-using-rabbitmq-and-sneaker-449c07284abf
