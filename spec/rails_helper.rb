@@ -18,7 +18,10 @@ require 'factory_bot_rails'
 require 'shoulda/matchers'
 require 'database_cleaner'
 
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' do
+  # Since the workers use Sneakers we won't get any coverage reported even if it gets called
+  add_filter %r{^/app/worker}
+end
 
 Dir[Rails.root.join('spec/support/publishers/**/*.rb')].each { |f| require f }
 Dir[Rails.root.join('spec/support/helpers/**/*.rb')].each { |f| require f }
@@ -32,6 +35,9 @@ end
 RSpec.configure do |config|
   config.include(Shoulda::Matchers::ActiveModel, type: :model)
   config.include(Shoulda::Matchers::ActiveRecord, type: :model)
+
+  config.include AuthRequestHelper, type: :request
+  config.include AuthHelper, type: :controller
 
   config.filter_run :focus
   config.filter_rails_from_backtrace!
