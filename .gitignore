@@ -16,3 +16,4 @@
 /coverage/*
 
 sneakers.pid
+.env
