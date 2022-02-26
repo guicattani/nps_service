@@ -16,23 +16,23 @@ ActiveRecord::Schema.define(version: 2022_02_23_205128) do
   enable_extension "plpgsql"
 
   # These are custom enum types that must be created before they can be used in the schema definition
-  create_enum "object_class_type", ["Pending", "HomedayService", "Realtor"]
   create_enum "respondent_class_type", ["Pending", "Buyer", "Seller"]
+  create_enum "scorable_class_type", ["Pending", "HomedayService", "Realtor"]
   create_enum "touchpoint_type", ["pending", "homeday_service_feedback", "realtor_feedback"]
 
   create_table "net_promoter_scores", force: :cascade do |t|
-    t.integer "score"
     t.string "type"
     t.string "token", null: false
     t.enum "touchpoint", default: "pending", null: false, as: "touchpoint_type"
     t.enum "respondent_class", default: "Pending", null: false, as: "respondent_class_type"
-    t.enum "object_class", default: "Pending", null: false, as: "object_class_type"
+    t.enum "scorable_class", default: "Pending", null: false, as: "scorable_class_type"
     t.bigint "respondent_id", null: false
-    t.bigint "object_id", null: false
+    t.bigint "scorable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["touchpoint", "respondent_id", "respondent_class", "object_id", "object_class"], name: "unique_touchpoint", unique: true
-    t.check_constraint "score = ANY (ARRAY[NULL::integer, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])", name: "check_score_decimal_scale"
+    t.integer "score", limit: 2
+    t.index ["touchpoint", "respondent_id", "respondent_class", "scorable_id", "scorable_class"], name: "unique_touchpoint", unique: true
+    t.check_constraint "(score >= 1) AND (score <= 10)", name: "net_promoter_scores_score_check"
   end
 
 end
